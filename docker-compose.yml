@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  agent-service:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - HINDSIGHT_ENV=local_docker
+      - GROQ_FALLBACK_MODEL=qwen3-32b
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - agent-service
